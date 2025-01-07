@@ -16,12 +16,12 @@ if __name__ == '__main__':
     aktiv = True
     automat.opstart()
     while aktiv:
-        print(generer_bruger_info())
-
+        print(str(generer_bruger_info())+' I alt er der: '+ str(len(generer_bruger_info())))
+        print('Værdi i kr. '+ str(automat.beregn_session_total()))
         # Simuleret pantindkast/udbetal-tryk
         handling = input('Indkast pant eller udbetal. ')
 
-        if handling == '':
+        if handling == 'udbetal':
             print(generer_kvittering_tekst())
             automat.udbetal()
 
