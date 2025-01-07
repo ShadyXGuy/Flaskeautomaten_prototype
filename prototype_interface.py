@@ -2,6 +2,7 @@ import automat
 
 # Denne funktion samler al information til brugeren i en tekst
 def generer_bruger_info():
+
     return generer_flaske_info()
 
 # Denne funktion genererer information om sessionens afleverede flasker
@@ -10,7 +11,13 @@ def generer_flaske_info():
 
 # Denne funktion genererer teksten til udskrift på kvittering
 def generer_kvittering_tekst():
+    out = ''
+    for type in automat.pantdata.keys():
+        out += type
+        out += str(automat.session.count(type))
+        out += automat.session.count(type) * str(automat.pantdata[type]['takst'])
     return automat.beregn_session_total()
+
 
 if __name__ == '__main__':
     aktiv = True
