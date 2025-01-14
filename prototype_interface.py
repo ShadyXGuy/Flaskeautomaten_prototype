@@ -13,13 +13,13 @@ def generer_flaske_info():
 def generer_kvittering_tekst():
     for type in automat.pantdata.keys():
         if type in automat.session:
-            print(automat.pantdata[type]['info'])
+            print(automat.pantdata[type]['info'] + ' ' + str(automat.session.count(type)))
     out = ''
     for type in automat.pantdata.keys():
         out += type
         out += str(automat.session.count(type))
         out += automat.session.count(type) * str(automat.pantdata[type]['takst'])
-    return automat.beregn_session_total()
+    return print('i alt ' + automat.beregn_session_total() + 'kr.')
 
 
 if __name__ == '__main__':
@@ -32,8 +32,11 @@ if __name__ == '__main__':
         handling = input('Indkast pant eller udbetal. ')
 
         if handling == 'udbetal':
-            print(generer_kvittering_tekst())
-            automat.udbetal()
+            if len(generer_kvittering_tekst()) > 50:
+                return False
+            else:
+                print(generer_kvittering_tekst())
+                automat.udbetal()
 
         elif (handling.upper() in automat.pantdata.keys()):
             automat.modtag(handling)
