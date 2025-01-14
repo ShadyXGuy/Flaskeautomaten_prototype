@@ -11,6 +11,9 @@ def generer_flaske_info():
 
 # Denne funktion genererer teksten til udskrift på kvittering
 def generer_kvittering_tekst():
+    for type in automat.pantdata.keys():
+        if type in automat.session:
+            print(automat.pantdata[type]['info'])
     out = ''
     for type in automat.pantdata.keys():
         out += type
