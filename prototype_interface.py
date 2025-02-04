@@ -11,21 +11,23 @@ def generer_flaske_info():
 
 # Denne funktion genererer teksten til udskrift på kvittering
 def generer_kvittering_tekst():
-
-   # for type in automat.pantdata.keys():
-   #     if type in automat.session:
-   #         (automat.pantdata[type]['info'] + ' ' + str(automat.session.count(type)) + ' x ' + str(automat.pantdata[type]['takst']) + 'kr.')
     out = ''
     for type in automat.pantdata.keys():
         if type in automat.session:
-            print(out)
             out += str(automat.pantdata[type]['info'] + ' ')
-            out += str(automat.session.count(type)) + ' x ' + str(automat.pantdata[type]['takst']) + ' kr.'
-            out += str(automat.beregn_session_total())
+            out += str(automat.session.count(type)) + 'X' + str(automat.pantdata[type]['takst']) + ' kr.\n'
+    out += str(automat.beregn_session_total())
+
 #skal være rekusiv funktion
+    out = limitLineLen(out, 50)
+def limitLineLen(out, lineLim):
     for line in out.split('\n'):
-        if len(line)>20:
-            fixedLine=line[:20]+'\n'+line[20:]
+        if len(line)>lineLim:
+            for newBreak in range(lineLim, 0, -1):
+                if line[newBreak]==' ':
+                    fixedLine=line[:newBreak].strip()+'\n'+line[newBreak:].strip()
+                    fixedLine = limitLineLen(fixedLine, lineLim)
+                    break
             out = out.replace(line,fixedLine)
     return out
 
